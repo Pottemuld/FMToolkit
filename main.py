@@ -24,11 +24,13 @@ def popupmsg(msg):
 while(True):
     sleep(5)
     image = pyautogui.screenshot()
-    image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2GRAY)
+    
+    crop_img = image[110:150, 250:425]
 
-    crop_img = image[10:70, 1575:1715]
+    greyscale = cv2.cvtColor(np.array(crop_img), cv2.COLOR_RGB2GRAY)
+
     sharpen_kernel = np.array([[0,-1,0], [-1,5,-1], [0,-1,0]])
-    sharpen = cv2.filter2D(crop_img, -1, sharpen_kernel)
+    sharpen = cv2.filter2D(greyscale, -1, sharpen_kernel)
 
     thresh = cv2.threshold(sharpen, 0, 255, cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)[1]
 
